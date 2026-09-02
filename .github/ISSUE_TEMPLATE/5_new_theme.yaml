@@ -1,0 +1,33 @@
+name: 🎨 New theme
+description: Create a client theme from an existing site
+title: "[Nouveau thème] Thème pour "
+type: Technical
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write the issue in French.
+        Set **Client** and **Priority** in the panel on the right: those two feed the board.
+  - type: input
+    id: source
+    attributes:
+      label: Site to copy
+      description: The address of the site the theme is built from.
+      placeholder: https://site-du-client.fr
+    validations:
+      required: true
+  - type: textarea
+    id: specifics
+    attributes:
+      label: Expected differences
+      description: Optional — what departs from a plain copy.
+      value: |
+        - Pied de page :
+        - PDF :
+        - Autres :
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional — delivery date, fonts to source, anything to know before starting.

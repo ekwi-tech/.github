@@ -1,0 +1,31 @@
+name: 🚀 Feature
+description: An idea or a request for new functionality
+title: "[Domain] "
+type: Feature
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write the issue in French. Titles follow `[Domain] Subject` — `[Calendrier] La date de départ ne suit pas`.
+        Set **Client** and **Priority** in the panel on the right: those two feed the board.
+  - type: textarea
+    id: need
+    attributes:
+      label: Need
+      description: The business need this answers, and for whom.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: |
+        What the user must be able to do. If it changes something that exists, show a before and after.
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Optional — current workaround, deadline, examples elsewhere.

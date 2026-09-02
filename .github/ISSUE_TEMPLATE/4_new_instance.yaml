@@ -1,0 +1,37 @@
+name: 🏠 New instance
+description: Create an instance for a client or a project
+title: "[Nouvelle instance] Création de l'instance "
+type: Technical
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write the issue in French.
+        Set **Priority**, and **Client** to `to be created`, in the panel on the right.
+        The roster only knows a client once its repository exists, which is what this ticket asks for.
+  - type: input
+    id: name
+    attributes:
+      label: Instance name
+      description: Lowercase, hyphenated, no accents — it names the repository, and both URLs derive from it.
+      placeholder: nom-instance
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Which client or which project this serves, and what it is for.
+    validations:
+      required: true
+  - type: input
+    id: domain
+    attributes:
+      label: Custom domain
+      description: Optional — only if the instance must be served on its own domain.
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Optional — expected delivery date, why the priority is what it is, anything the derived names do not cover.

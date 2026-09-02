@@ -1,0 +1,23 @@
+name: 🔧 Technical
+description: Debt, tooling, migration, client delivery — work that does not change the product itself
+title: "[Domain] "
+type: Technical
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Write the issue in French. Titles follow `[Domain] Subject` — `[Calendrier] La date de départ ne suit pas`.
+        Set **Client** and **Priority** in the panel on the right: those two feed the board.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: The technical problem, and what it costs if left alone.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Optional — a direction for the fix, or how to break it down.

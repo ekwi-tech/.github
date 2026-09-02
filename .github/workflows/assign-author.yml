@@ -1,0 +1,28 @@
+name: Assign the author
+
+# Workflow files are never inherited from an organization's .github repository: each caller carries
+# its own triggers and grants the scope.
+on:
+  workflow_call:
+
+jobs:
+  assign:
+    name: Add the author
+    # A bot owning what it opened is noise: Dependabot's pull requests are read and merged.
+    if: github.event.sender.type != 'Bot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # No job-level permissions on purpose: a called workflow may only narrow what the caller grants,
+    # and asking for more fails the run at startup.
+    steps:
+      # One endpoint for both: a pull request is an issue as far as assignees are concerned.
+      - name: Add the author
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NUMBER: ${{ github.event.issue.number || github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.issue.user.login || github.event.pull_request.user.login }}
+        run: |
+          assigned=$(gh api "repos/$GITHUB_REPOSITORY/issues/$NUMBER/assignees" \
+            -f "assignees[]=$AUTHOR" --jq '.assignees[].login')
+          # The API drops a login it cannot assign and still answers 201: silence would read as done.
+          grep -Fqx "$AUTHOR" <<<"$assigned" || { echo "::error::$AUTHOR was not assigned"; exit 1; }

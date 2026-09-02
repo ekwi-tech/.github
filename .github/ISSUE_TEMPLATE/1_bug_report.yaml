@@ -1,0 +1,45 @@
+name: 🐛 Bug
+description: Unexpected behaviour, or a regression
+title: "[Domain] "
+type: Bug
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ⚠️ **Never report a security flaw here.** Email pierre@ekwi.tech instead.
+        Write the issue in French. Titles follow `[Domain] Subject` — `[Calendrier] La date de départ ne suit pas`.
+        Set **Client** and **Priority** in the panel on the right: those two feed the board.
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What happens, and what should happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: |
+        ⚠️ The most important part. Without a way to reproduce, there is little chance we can help.
+        Give the steps, the data or the configuration needed.
+    validations:
+      required: true
+  - type: input
+    id: url
+    attributes:
+      label: URL
+      description: The page where the problem shows up. Name the screen or the command if there is none.
+    validations:
+      required: true
+  - type: textarea
+    id: cause
+    attributes:
+      label: Possible cause
+      description: Optional — a thought on the cause or the fix.
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Optional — logs, screenshots, anything that helps.

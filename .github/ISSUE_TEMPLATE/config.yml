@@ -1,0 +1,9 @@
+blank_issues_enabled: false
+
+contact_links:
+  - name: ❓ Question
+    url: mailto:pierre@ekwi.tech
+    about: A question that is neither a bug nor a request.
+  - name: 🔒 Security flaw
+    url: mailto:pierre@ekwi.tech
+    about: Never open a public issue for a security flaw.

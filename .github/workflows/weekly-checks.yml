@@ -1,0 +1,46 @@
+name: Weekly checks
+
+# Both watch a cadence rather than the work: the roster drifts the day a client repository is
+# created, and triage falls behind week by week. One schedule, one token, two findings.
+on:
+  schedule:
+    - cron: "05 6 * * 1"
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    name: Report drift and stalled triage
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      # GITHUB_TOKEN is blind to all three of these: the organization's private `instance-*`
+      # repositories, its issue fields, and the project the board lives on.
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: token
+        with:
+          client-id: ${{ secrets.CI_APP_CLIENT_ID }}
+          private-key: ${{ secrets.CI_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # The failure is the notification: both targets are settings or human decisions, so there is
+      # nothing for this job to commit.
+      - name: Compare the roster with the Client field
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+        run: python3 tools/check_clients.py
+
+      # The two findings are unrelated: a roster drift must not hide a stalled triage. Guarded on
+      # the token rather than `always()`, which would also run after a failed one.
+      - name: Report triage that has stalled
+        if: steps.token.outcome == 'success' && !cancelled()
+        env:
+          GH_TOKEN: ${{ steps.token.outputs.token }}
+        run: python3 tools/check_triage.py
